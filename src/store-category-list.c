@@ -33,8 +33,7 @@ enum
 
 static guint signals[SIGNAL_LAST] = { 0, };
 
-static void
-app_activated_cb (StoreCategoryList *self, StoreAppSmallTile *tile)
+static void app_activated_cb (StoreCategoryList *self, StoreAppSmallTile *tile)
 {
     g_signal_emit (self, signals[SIGNAL_APP_ACTIVATED], 0, store_app_small_tile_get_app (tile));
 }
@@ -46,8 +45,7 @@ button_release_event_cb (StoreAppSmallTile *self)
     return TRUE;
 }
 
-static void
-store_category_list_dispose (GObject *object)
+static void store_category_list_dispose (GObject *object)
 {
     StoreCategoryList *self = STORE_CATEGORY_LIST (object);
 
@@ -57,8 +55,7 @@ store_category_list_dispose (GObject *object)
     G_OBJECT_CLASS (store_category_list_parent_class)->dispose (object);
 }
 
-static void
-store_category_list_class_init (StoreCategoryListClass *klass)
+static void store_category_list_class_init (StoreCategoryListClass *klass)
 {
     G_OBJECT_CLASS (klass)->dispose = store_category_list_dispose;
 
@@ -89,8 +86,7 @@ store_category_list_class_init (StoreCategoryListClass *klass)
                                                   1, store_app_get_type ());
 }
 
-static void
-store_category_list_init (StoreCategoryList *self)
+static void store_category_list_init (StoreCategoryList *self)
 {
     gtk_widget_init_template (GTK_WIDGET (self));
 }
@@ -101,8 +97,7 @@ store_category_list_new (void)
     return g_object_new (store_category_list_get_type (), NULL);
 }
 
-void
-store_category_list_set_category (StoreCategoryList *self, StoreCategory *category)
+void store_category_list_set_category (StoreCategoryList *self, StoreCategory *category)
 {
     g_return_if_fail (STORE_IS_CATEGORY_LIST (self));
 
@@ -138,19 +133,16 @@ store_category_list_set_category (StoreCategoryList *self, StoreCategory *catego
     }
 }
 
-StoreCategory *
-store_category_list_get_category (StoreCategoryList *self)
+StoreCategory * store_category_list_get_category (StoreCategoryList *self)
 {
     g_return_val_if_fail (STORE_IS_CATEGORY_LIST (self), NULL);
 
     return self->category;
 }
 
-void
-store_category_list_set_model (StoreCategoryList *self, StoreModel *model)
+void store_category_list_set_model (StoreCategoryList *self, StoreModel *model)
 {
     g_return_if_fail (STORE_IS_CATEGORY_LIST (self));
-
     g_set_object (&self->model, model);
     g_autoptr(GList) children = gtk_container_get_children (GTK_CONTAINER (self->app_box));
     for (GList *link = children; link != NULL; link = link->next) {
