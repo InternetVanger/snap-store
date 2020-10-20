@@ -70,8 +70,7 @@ enum
 
 G_DEFINE_TYPE_WITH_PRIVATE (StoreApp, store_app, G_TYPE_OBJECT)
 
-static void
-store_app_dispose (GObject *object)
+static void store_app_dispose (GObject *object)
 {
     StoreApp *self = STORE_APP (object);
     StoreAppPrivate *priv = store_app_get_instance_private (self);
@@ -95,8 +94,7 @@ store_app_dispose (GObject *object)
     G_OBJECT_CLASS (store_app_parent_class)->dispose (object);
 }
 
-static void
-store_app_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
+static void store_app_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
     StoreApp *self = STORE_APP (object);
     StoreAppPrivate *priv = store_app_get_instance_private (self);
@@ -181,8 +179,7 @@ store_app_get_property (GObject *object, guint prop_id, GValue *value, GParamSpe
     }
 }
 
-static void
-store_app_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
+static void store_app_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
 {
     StoreApp *self = STORE_APP (object);
 
@@ -260,40 +257,35 @@ store_app_set_property (GObject *object, guint prop_id, const GValue *value, GPa
     }
 }
 
-static void
-install_string_property (StoreAppClass *klass, guint property_id, const gchar *name)
+static void install_string_property (StoreAppClass *klass, guint property_id, const gchar *name)
 {
     g_object_class_install_property (G_OBJECT_CLASS (klass),
                                      property_id,
                                      g_param_spec_string (name, NULL, NULL, NULL, G_PARAM_READWRITE));
 }
 
-static void
-install_array_property (StoreAppClass *klass, guint property_id, const gchar *name)
+static void install_array_property (StoreAppClass *klass, guint property_id, const gchar *name)
 {
     g_object_class_install_property (G_OBJECT_CLASS (klass),
                                      property_id,
                                      g_param_spec_boxed (name, NULL, NULL, G_TYPE_PTR_ARRAY, G_PARAM_READWRITE));
 }
 
-static void
-install_object_property (StoreAppClass *klass, guint property_id, const gchar *name, GType type)
+static void install_object_property (StoreAppClass *klass, guint property_id, const gchar *name, GType type)
 {
     g_object_class_install_property (G_OBJECT_CLASS (klass),
                                      property_id,
                                      g_param_spec_object (name, NULL, NULL, type, G_PARAM_READWRITE));
 }
 
-static void
-install_boolean_property (StoreAppClass *klass, guint property_id, const gchar *name)
+static void install_boolean_property (StoreAppClass *klass, guint property_id, const gchar *name)
 {
     g_object_class_install_property (G_OBJECT_CLASS (klass),
                                      property_id,
                                      g_param_spec_boolean (name, NULL, NULL, FALSE, G_PARAM_READWRITE));
 }
 
-static void
-store_app_class_init (StoreAppClass *klass)
+static void store_app_class_init (StoreAppClass *klass)
 {
     G_OBJECT_CLASS (klass)->dispose = store_app_dispose;
     G_OBJECT_CLASS (klass)->get_property = store_app_get_property;
@@ -343,8 +335,7 @@ store_app_class_init (StoreAppClass *klass)
     install_string_property (klass, PROP_VERSION, "version");
 }
 
-static void
-store_app_init (StoreApp *self)
+static void store_app_init (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -353,29 +344,25 @@ store_app_init (StoreApp *self)
     priv->screenshots = g_ptr_array_new ();
 }
 
-void
-store_app_install_async (StoreApp *self, StoreChannel *channel, GCancellable *cancellable, GAsyncReadyCallback callback, gpointer callback_data)
+void store_app_install_async (StoreApp *self, StoreChannel *channel, GCancellable *cancellable, GAsyncReadyCallback callback, gpointer callback_data)
 {
     g_return_if_fail (STORE_IS_APP (self));
     STORE_APP_GET_CLASS (self)->install_async (self, channel, cancellable, callback, callback_data);
 }
 
-gboolean
-store_app_install_finish (StoreApp *self, GAsyncResult *result, GError **error)
+gboolean store_app_install_finish (StoreApp *self, GAsyncResult *result, GError **error)
 {
     g_return_val_if_fail (STORE_IS_APP (self), FALSE);
     return STORE_APP_GET_CLASS (self)->install_finish (self, result, error);
 }
 
-gboolean
-store_app_launch (StoreApp *self, GError **error)
+gboolean store_app_launch (StoreApp *self, GError **error)
 {
     g_return_val_if_fail (STORE_IS_APP (self), FALSE);
     return STORE_APP_GET_CLASS (self)->launch (self, error);
 }
 
-void
-store_app_refresh_async (StoreApp *self, GCancellable *cancellable, GAsyncReadyCallback callback, gpointer callback_data)
+void store_app_refresh_async (StoreApp *self, GCancellable *cancellable, GAsyncReadyCallback callback, gpointer callback_data)
 {
     g_return_if_fail (STORE_IS_APP (self));
     STORE_APP_GET_CLASS (self)->refresh_async (self, cancellable, callback, callback_data);
@@ -388,8 +375,7 @@ store_app_refresh_finish (StoreApp *self, GAsyncResult *result, GError **error)
     return STORE_APP_GET_CLASS (self)->refresh_finish (self, result, error);
 }
 
-void
-store_app_remove_async (StoreApp *self, GCancellable *cancellable, GAsyncReadyCallback callback, gpointer callback_data)
+void store_app_remove_async (StoreApp *self, GCancellable *cancellable, GAsyncReadyCallback callback, gpointer callback_data)
 {
     g_return_if_fail (STORE_IS_APP (self));
     STORE_APP_GET_CLASS (self)->remove_async (self, cancellable, callback, callback_data);
@@ -402,22 +388,19 @@ store_app_remove_finish (StoreApp *self, GAsyncResult *result, GError **error)
     return STORE_APP_GET_CLASS (self)->remove_finish (self, result, error);
 }
 
-void
-store_app_save_to_cache (StoreApp *self, StoreCache *cache)
+void store_app_save_to_cache (StoreApp *self, StoreCache *cache)
 {
     g_return_if_fail (STORE_IS_APP (self));
     STORE_APP_GET_CLASS (self)->save_to_cache (self, cache);
 }
 
-void
-store_app_update_from_cache (StoreApp *self, StoreCache *cache)
+void store_app_update_from_cache (StoreApp *self, StoreCache *cache)
 {
     g_return_if_fail (STORE_IS_APP (self));
     STORE_APP_GET_CLASS (self)->update_from_cache (self, cache);
 }
 
-void
-store_app_set_appstream_id (StoreApp *self, const gchar *appstream_id)
+void store_app_set_appstream_id (StoreApp *self, const gchar *appstream_id)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -427,8 +410,7 @@ store_app_set_appstream_id (StoreApp *self, const gchar *appstream_id)
     priv->appstream_id = g_strdup (appstream_id);
 }
 
-const gchar *
-store_app_get_appstream_id (StoreApp *self)
+const gchar *store_app_get_appstream_id (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -437,8 +419,7 @@ store_app_get_appstream_id (StoreApp *self)
     return priv->appstream_id;
 }
 
-void
-store_app_set_banner (StoreApp *self, StoreMedia *banner)
+void store_app_set_banner (StoreApp *self, StoreMedia *banner)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -451,8 +432,7 @@ store_app_set_banner (StoreApp *self, StoreMedia *banner)
     g_object_notify (G_OBJECT (self), "banner");
 }
 
-StoreMedia *
-store_app_get_banner (StoreApp *self)
+StoreMedia * store_app_get_banner (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -461,8 +441,7 @@ store_app_get_banner (StoreApp *self)
     return priv->banner;
 }
 
-void
-store_app_set_channels (StoreApp *self, GPtrArray *channels)
+void store_app_set_channels (StoreApp *self, GPtrArray *channels)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -475,8 +454,7 @@ store_app_set_channels (StoreApp *self, GPtrArray *channels)
     g_object_notify (G_OBJECT (self), "channels");
 }
 
-GPtrArray *
-store_app_get_channels (StoreApp *self)
+GPtrArray * store_app_get_channels (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -485,8 +463,7 @@ store_app_get_channels (StoreApp *self)
     return priv->channels;
 }
 
-void
-store_app_set_contact (StoreApp *self, const gchar *contact)
+void store_app_set_contact (StoreApp *self, const gchar *contact)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -498,8 +475,7 @@ store_app_set_contact (StoreApp *self, const gchar *contact)
     g_object_notify (G_OBJECT (self), "contact");
 }
 
-const gchar *
-store_app_get_contact (StoreApp *self)
+const gchar *store_app_get_contact (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -508,8 +484,7 @@ store_app_get_contact (StoreApp *self)
     return priv->contact;
 }
 
-void
-store_app_set_description (StoreApp *self, const gchar *description)
+void store_app_set_description (StoreApp *self, const gchar *description)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -521,8 +496,7 @@ store_app_set_description (StoreApp *self, const gchar *description)
     g_object_notify (G_OBJECT (self), "description");
 }
 
-const gchar *
-store_app_get_description (StoreApp *self)
+const gchar * store_app_get_description (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -531,8 +505,7 @@ store_app_get_description (StoreApp *self)
     return priv->description;
 }
 
-void
-store_app_set_icon (StoreApp *self, StoreMedia *icon)
+void store_app_set_icon (StoreApp *self, StoreMedia *icon)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -555,8 +528,7 @@ store_app_get_icon (StoreApp *self)
     return priv->icon;
 }
 
-void
-store_app_set_installed (StoreApp *self, gboolean installed)
+void store_app_set_installed (StoreApp *self, gboolean installed)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -567,8 +539,7 @@ store_app_set_installed (StoreApp *self, gboolean installed)
     g_object_notify (G_OBJECT (self), "installed");
 }
 
-gboolean
-store_app_get_installed (StoreApp *self)
+gboolean store_app_get_installed (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -577,8 +548,7 @@ store_app_get_installed (StoreApp *self)
     return priv->installed;
 }
 
-void
-store_app_set_installed_size (StoreApp *self, gint64 size)
+void store_app_set_installed_size (StoreApp *self, gint64 size)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -589,8 +559,7 @@ store_app_set_installed_size (StoreApp *self, gint64 size)
     g_object_notify (G_OBJECT (self), "installed-size");
 }
 
-gint64
-store_app_get_installed_size (StoreApp *self)
+gint64 store_app_get_installed_size (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -599,8 +568,7 @@ store_app_get_installed_size (StoreApp *self)
     return priv->installed_size;
 }
 
-void
-store_app_set_license (StoreApp *self, const gchar *license)
+void store_app_set_license (StoreApp *self, const gchar *license)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -612,8 +580,7 @@ store_app_set_license (StoreApp *self, const gchar *license)
     g_object_notify (G_OBJECT (self), "license");
 }
 
-const gchar *
-store_app_get_license (StoreApp *self)
+const gchar *store_app_get_license (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -622,8 +589,7 @@ store_app_get_license (StoreApp *self)
     return priv->license;
 }
 
-void
-store_app_set_name (StoreApp *self, const gchar *name)
+void store_app_set_name (StoreApp *self, const gchar *name)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -635,8 +601,7 @@ store_app_set_name (StoreApp *self, const gchar *name)
     g_object_notify (G_OBJECT (self), "name");
 }
 
-const gchar *
-store_app_get_name (StoreApp *self)
+const gchar *store_app_get_name (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -645,8 +610,7 @@ store_app_get_name (StoreApp *self)
     return priv->name;
 }
 
-void
-store_app_set_publisher (StoreApp *self, const gchar *publisher)
+void store_app_set_publisher (StoreApp *self, const gchar *publisher)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -658,8 +622,7 @@ store_app_set_publisher (StoreApp *self, const gchar *publisher)
     g_object_notify (G_OBJECT (self), "publisher");
 }
 
-const gchar *
-store_app_get_publisher (StoreApp *self)
+const gchar *store_app_get_publisher (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -668,8 +631,7 @@ store_app_get_publisher (StoreApp *self)
     return priv->publisher;
 }
 
-void
-store_app_set_publisher_validated (StoreApp *self, gboolean validated)
+void store_app_set_publisher_validated (StoreApp *self, gboolean validated)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -678,8 +640,7 @@ store_app_set_publisher_validated (StoreApp *self, gboolean validated)
     priv->publisher_validated = validated;
 }
 
-gboolean
-store_app_get_publisher_validated (StoreApp *self)
+gboolean store_app_get_publisher_validated (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -688,8 +649,7 @@ store_app_get_publisher_validated (StoreApp *self)
     return priv->publisher_validated;
 }
 
-static gdouble
-pnormaldist (gdouble qn)
+static gdouble pnormaldist (gdouble qn)
 {
     static gdouble b[11] = {
         1.570796288,      0.03706987906,   -0.8364353589e-3,
@@ -718,8 +678,7 @@ pnormaldist (gdouble qn)
         return -sqrt (w1 * w3);
 }
 
-static gdouble
-wilson_score (gdouble value, gdouble n, gdouble power)
+static gdouble wilson_score (gdouble value, gdouble n, gdouble power)
 {
     if (value == 0)
         return 0;
@@ -729,8 +688,7 @@ wilson_score (gdouble value, gdouble n, gdouble power)
     return (phat + z * z / (2 * n) - z * sqrt ((phat * (1 - phat) + z * z / (4 * n)) / n)) / (1 + z * z / n);
 }
 
-gint
-store_app_get_review_average (StoreApp *self)
+gint store_app_get_review_average (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -748,8 +706,7 @@ store_app_get_review_average (StoreApp *self)
     return ceil (20 * (val + 3));
 }
 
-gint64
-store_app_get_review_count (StoreApp *self)
+gint64 store_app_get_review_count (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -758,8 +715,7 @@ store_app_get_review_count (StoreApp *self)
     return priv->review_count_one_star + priv->review_count_two_star + priv->review_count_three_star + priv->review_count_four_star + priv->review_count_five_star;
 }
 
-void
-store_app_set_review_count_one_star (StoreApp *self, gint64 count)
+void store_app_set_review_count_one_star (StoreApp *self, gint64 count)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -772,8 +728,7 @@ store_app_set_review_count_one_star (StoreApp *self, gint64 count)
     g_object_notify (G_OBJECT (self), "review-average");
 }
 
-void
-store_app_set_review_count_two_star (StoreApp *self, gint64 count)
+void store_app_set_review_count_two_star (StoreApp *self, gint64 count)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -786,8 +741,7 @@ store_app_set_review_count_two_star (StoreApp *self, gint64 count)
     g_object_notify (G_OBJECT (self), "review-average");
 }
 
-void
-store_app_set_review_count_three_star (StoreApp *self, gint64 count)
+void store_app_set_review_count_three_star (StoreApp *self, gint64 count)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -800,8 +754,7 @@ store_app_set_review_count_three_star (StoreApp *self, gint64 count)
     g_object_notify (G_OBJECT (self), "review-average");
 }
 
-void
-store_app_set_review_count_four_star (StoreApp *self, gint64 count)
+void store_app_set_review_count_four_star (StoreApp *self, gint64 count)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -814,8 +767,7 @@ store_app_set_review_count_four_star (StoreApp *self, gint64 count)
     g_object_notify (G_OBJECT (self), "review-average");
 }
 
-void
-store_app_set_review_count_five_star (StoreApp *self, gint64 count)
+void store_app_set_review_count_five_star (StoreApp *self, gint64 count)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -828,8 +780,7 @@ store_app_set_review_count_five_star (StoreApp *self, gint64 count)
     g_object_notify (G_OBJECT (self), "review-average");
 }
 
-void
-store_app_set_reviews (StoreApp *self, GPtrArray *reviews)
+void store_app_set_reviews (StoreApp *self, GPtrArray *reviews)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -852,8 +803,7 @@ store_app_get_reviews (StoreApp *self)
     return priv->reviews;
 }
 
-void
-store_app_set_screenshots (StoreApp *self, GPtrArray *screenshots)
+void store_app_set_screenshots (StoreApp *self, GPtrArray *screenshots)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -876,8 +826,7 @@ store_app_get_screenshots (StoreApp *self)
     return priv->screenshots;
 }
 
-void
-store_app_set_summary (StoreApp *self, const gchar *summary)
+void store_app_set_summary (StoreApp *self, const gchar *summary)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -899,8 +848,7 @@ store_app_get_summary (StoreApp *self)
     return priv->summary;
 }
 
-void
-store_app_set_title (StoreApp *self, const gchar *title)
+void store_app_set_title (StoreApp *self, const gchar *title)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -922,8 +870,7 @@ store_app_get_title (StoreApp *self)
     return priv->title;
 }
 
-void
-store_app_set_updated_date (StoreApp *self, GDateTime *date)
+void store_app_set_updated_date (StoreApp *self, GDateTime *date)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -946,8 +893,7 @@ store_app_get_updated_date (StoreApp *self)
     return priv->updated_date;
 }
 
-void
-store_app_set_version (StoreApp *self, const gchar *version)
+void store_app_set_version (StoreApp *self, const gchar *version)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
@@ -959,8 +905,7 @@ store_app_set_version (StoreApp *self, const gchar *version)
     g_object_notify (G_OBJECT (self), "version");
 }
 
-const gchar *
-store_app_get_version (StoreApp *self)
+const gchar *store_app_get_version (StoreApp *self)
 {
     StoreAppPrivate *priv = store_app_get_instance_private (self);
 
